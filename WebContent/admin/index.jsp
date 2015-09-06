@@ -112,6 +112,8 @@
     <script>
 $(document).ready(function()
 {
+	///xxxx
+	
   $.ajax({
 	  method: "POST",
 	  url: appCore.path+"/Core",
