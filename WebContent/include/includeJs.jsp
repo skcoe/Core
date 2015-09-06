@@ -18,6 +18,8 @@ String display=(String)session.getAttribute("display"); */
 var appCore={};
 appCore.path='<%= basePath %>';
 appCore.pathService=appCore.path +'/Coe';
+appCore.type={};
+appCore.key={appType:"type"};
 </script>
 
 

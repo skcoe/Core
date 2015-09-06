@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +63,10 @@ public class Core extends HttpServlet {
 		String c= request.getParameter("c");//application/json
 		JSONObject input=null;
 		try {
-			 input=new JSONObject(c);
+			if(c!=null&&!"".equals(c)){
+				 input=new JSONObject(c);
+			}
+			
 		} catch (JSONException e) {
 			try { 
 				resp.put("msg", "Input ERR: "+e.getMessage());
@@ -100,8 +102,10 @@ public class Core extends HttpServlet {
 					resp.put("status", "sucess");
 					writer.write(resp.toString());
 				}else if("LOAD_FILE".equals(service)){
+					
 					// reads input file from an absolute path
-					String filePath = "D:/ext-lib/js/h.js";
+					String filePath = getPathFile(input.getString("id"));
+					
 					File downloadFile = new File(filePath);
 					FileInputStream inStream = new FileInputStream(downloadFile);
 
@@ -170,6 +174,18 @@ public class Core extends HttpServlet {
 
 
 
+	}
+	
+	private String getPathFile(String id){
+		String p="D:/ext-lib/js/h.js";
+		if("containerAppType".equals(id)){
+			p="D:/DEV/DinamicFast/Core/WebContent/JsAndCss/JS/container/appType.js";
+		}
+		
+		
+		return p;
+		
+		
 	}
 
 }
