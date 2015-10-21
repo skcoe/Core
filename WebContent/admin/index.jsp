@@ -116,7 +116,7 @@ $(document).ready(function()
 	var ida="containerAppType";
 	 $.ajax({
 	  url: appCore.path+"/Core",
-	  data:{"c":"{'service':'LOAD_FILE','id':'"+ida+"'}"},
+	  data:{"c":"{'service':'LOAD_FILE_APP','id':'"+ida+"'}"},
 	  dataType: "script",
 	  success:  function(e) {
 		  console.log("xxx"+ida );

@@ -2,6 +2,7 @@ package com.skcoe18.core.http.servlet;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -101,50 +102,8 @@ public class Core extends HttpServlet {
 					resp.put("data", "");
 					resp.put("status", "sucess");
 					writer.write(resp.toString());
-				}else if("LOAD_FILE".equals(service)){
-					
-					// reads input file from an absolute path
-					String filePath = getPathFile(input.getString("id"));
-					
-					File downloadFile = new File(filePath);
-					FileInputStream inStream = new FileInputStream(downloadFile);
-
-					// if you want to use a relative path to context root:
-					String relativePath = getServletContext().getRealPath("");
-					log.info("relativePath = " + relativePath);
-
-					// obtains ServletContext
-					ServletContext context = getServletContext();
-
-					// gets MIME type of the file
-					String mimeType = context.getMimeType(filePath);
-					if (mimeType == null) {        
-						// set to binary type if MIME mapping not found
-						mimeType = "application/octet-stream";
-					}
-					log.info("MIME type: " + mimeType);
-
-					// modifies response
-					response.setContentType(mimeType);
-					response.setContentLength((int) downloadFile.length());
-
-					// forces download
-					String headerKey = "Content-Disposition";
-					String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
-					response.setHeader(headerKey, headerValue);
-
-					// obtains response's output stream
-					OutputStream outStream = response.getOutputStream();
-
-					byte[] buffer = new byte[4096];
-					int bytesRead = -1;
-
-					while ((bytesRead = inStream.read(buffer)) != -1) {
-						outStream.write(buffer, 0, bytesRead);
-					}
-
-					inStream.close();
-					outStream.close(); 
+				}else if("LOAD_FILE_APP".equals(service)){
+					loadfileV2( input, response);
 				}else{
 					resp.put("msg", "ERROR SERVICE : "+service);
 					resp.put("status", "error");
@@ -179,7 +138,7 @@ public class Core extends HttpServlet {
 	private String getPathFile(String id){
 		String p="D:/ext-lib/js/h.js";
 		if("containerAppType".equals(id)){
-			p="D:/DEV/DinamicFast/Core/WebContent/JsAndCss/JS/container/appType.js";
+			p="C:/Users/SK/git/Core/WebContent/JsAndCss/JS/container/appType.js";
 		}
 		
 		
@@ -187,5 +146,88 @@ public class Core extends HttpServlet {
 		
 		
 	}
+	
+	private void loadfileV1(JSONObject input,HttpServletResponse response) throws JSONException, IOException{
+		// reads input file from an absolute path
+		String filePath = getPathFile(input.getString("id"));
+
+		File downloadFile = new File(filePath);
+		FileInputStream inStream = new FileInputStream(downloadFile);
+
+		// if you want to use a relative path to context root:
+		String relativePath = getServletContext().getRealPath("");
+		log.info("relativePath = " + relativePath);
+
+		// obtains ServletContext
+		ServletContext context = getServletContext();
+
+		// gets MIME type of the file
+		String mimeType = context.getMimeType(filePath);
+		if (mimeType == null) {        
+			// set to binary type if MIME mapping not found
+			mimeType = "application/octet-stream";
+		}
+		log.info("MIME type: " + mimeType);
+
+		// modifies response
+		response.setContentType(mimeType);
+		response.setContentLength((int) downloadFile.length());
+
+		// forces download
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
+		response.setHeader(headerKey, headerValue);
+
+		// obtains response's output stream
+		OutputStream outStream = response.getOutputStream();
+
+		byte[] buffer = new byte[4096];
+		int bytesRead = -1;
+
+		while ((bytesRead = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, bytesRead);
+		}
+
+		inStream.close();
+		outStream.close(); 
+		
+	}
+
+
+	private void loadfileV2(JSONObject input,HttpServletResponse response) throws JSONException, IOException{
+		// reads input file from an absolute path
+		String filePath = getPathFile(input.getString("id"));
+
+		//File downloadFile = new File(filePath);
+		//FileInputStream inStream = new FileInputStream(downloadFile);
+
+	StringBuffer sb= new StringBuffer();
+	sb.append("var app={id:'',buildHTML:function(){$('#'+this.id).empty()},buildCSS:function(){alert('buildCSS')},buildEvent:function(){alert('buildEvent')},data:{},load:function(){alert('load'),this.buildHTML(),this.buildCSS(),this.buildEvent()}};");
+		
+		// modifies response
+		response.setContentType("application/javascript");
+		response.setContentLength((int) sb.length());
+
+		// forces download
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "FileName");
+		response.setHeader(headerKey, headerValue);
+
+		// obtains response's output stream
+		OutputStream outStream = response.getOutputStream();
+
+		/*byte[] buffer = new byte[4096];
+		int bytesRead = -1;
+
+		while ((bytesRead = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, bytesRead);
+		}*/
+		
+		outStream.write(sb.toString().getBytes());
+
+		//inStream.close();
+		outStream.close(); 
+	}
+
 
 }
