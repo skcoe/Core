@@ -34,109 +34,132 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Application</h1>
-      </div>
-    </div>
-
-	<div class="container" id='containerAppType'>
-		<!-- Example row of columns -->
-		
-		<div class="row">
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><button id='test' type="button" class="btn btn-default"><span class="glyphicon  glyphicon-link" aria-hidden="true"></span></button>  Panel title Admin </h3>
+ <div id='containerAppType' >
+<!-- Title Screen -->
+	   <div class="jumbotron">
+	      <div class="container">
+	        <h1>Application</h1>
+	      </div>
+	    </div>
+	
+<!-- Body Screen -->
+		<div class="container" >
+			<!-- Example row of columns -->
+			<!-- <div class="jumbotron"><h1>Application</h1></div> -->
+			<div class="row" >
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"><button id='test' type="button" class="btn btn-default"><span class="glyphicon  glyphicon-link" aria-hidden="true"></span></button>  Panel title Admin </h3>
+						</div>
+						<div class="panel-body">Panel content</div>
 					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">Panel title</h3>
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Panel title</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
 					</div>
-					<div class="panel-body">Panel content</div>
+	
 				</div>
-
+				<div class="col-md-4">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title"><button id='test2' type="button" class="btn btn-default"><span class="glyphicon  glyphicon-link" aria-hidden="true"></span></button>  Panel title</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
+					</div>
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Panel title</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
+					</div>
+				</div>
+				 <div class="col-md-4">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<h3 class="panel-title">Panel title</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
+					</div>
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h3 class="panel-title">Panel title</h3>
+						</div>
+						<div class="panel-body">Panel content</div>
+					</div>
+				</div> 
 			</div>
-			<div class="col-md-4">
-				<div class="panel panel-success">
-					<div class="panel-heading">
-						<h3 class="panel-title"><button id='test2' type="button" class="btn btn-default"><span class="glyphicon  glyphicon-link" aria-hidden="true"></span></button>  Panel title</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">Panel title</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-warning">
-					<div class="panel-heading">
-						<h3 class="panel-title">Panel title</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-				<div class="panel panel-danger">
-					<div class="panel-heading">
-						<h3 class="panel-title">Panel title</h3>
-					</div>
-					<div class="panel-body">Panel content</div>
-				</div>
-			</div>
-		</div>
-<nav>
-  <ul class="pager">
-    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-    <li ><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-     <li>2</li>
-    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
-  </ul>
-  
-</nav>
-		<hr>
-
-		<footer>
-		<p>© Company 2014</p>
-		</footer>
-	</div>
-	<!-- /container -->
-
+	    </div>
+<!-- pagging  -->			
+		<nav class="container">
+		  <ul class="pager">
+		    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+		    <li ><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+		     <li>2</li>
+		    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+		  </ul>
+		</nav>
+</div>
+<BR><BR>
+<hr>
+<footer>
+<p>© Company 2014</p>
+</footer>
 </body>
 <%@ include file="../include/includeJs.jsp"%>
     <script>
 $(document).ready(function()
 {
 	////////////////////////////////////////////////////////
-	var ida="containerAppType";
-	 $.ajax({
-	  url: appCore.path+"/Core",
-	  data:{"c":"{'service':'LOAD_FILE_APP','id':'"+ida+"'}"},
-	  dataType: "script",
-	  success:  function(e) {
-		  console.log("xxx"+ida );
-		 // appCore.loadx();
-			/* if(appCore.load){
-				
-				 appCore.load= true;
-			} */
-			//alert(app.id);
-			app.id=ida;
-			appCore[appCore.key.appType][app.id]=app;
-			appCore[appCore.key.appType][app.id].load();
-	  }
-	  });
-	
-	
-	
+	//var ida="containerAppType";$.ajax({url:appCore.path+"/Core",data:{c:"{'service':'LOAD_FILE_APP','id':'"+ida+"'}"},dataType:"script",success:function(){console.log("xxx"+ida),app.id=ida,appCore[appCore.key.appType][app.id]=app,appCore[appCore.key.appType][app.id].load()}});
+	 
 	//////////////////////////////////////////////
 	
- 
+	var app={
+			id:"containerAppType",
+			buildHTML:function(){
+				/**V1** $( "#"+this.id ).empty();
+				 var item={paneltitle:"Admin"}
+				 var s2="<div class='panel panel-danger'> <div class='panel-heading'> <h3 class='panel-title'>Panel title</h3> </div> <div class='panel-body'>Panel content</div> </div>";
+				 var s="<div class='col-md-4'><div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'><button id='test' type='button' class='btn btn-default'><span class='glyphicon glyphicon-link' aria-hidden='true'></span></button> "+item.paneltitle+" </h3></div><div class='panel-body'>"+item.panelcontent+"</div></div><div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title'>Panel title</h3></div><div class='panel-body'>Panel content</div></div></div>";
+				 $( "#"+this.id ).append(s2); */
+				 
+				 
+				 /**V2** $( "#"+this.id ).empty();
+				var s3=appCore.content.panel({classEx:"panel-danger",title:"panel-title",content:"Panel content"});
+				$( "#"+this.id ).append(s3); */
+				
+				/**V3 E1**$( "#"+this.id ).empty();
+				var item={classEx:"panel-danger",title:"panel-title",content:"Panel content",type:"appCore.content.panel"};
+				var s4=appCore.getContent(item);
+				$( "#"+this.id ).append(s4);  */
+				
+				  $( "#"+this.id ).empty();
+				var item1 = { classEx : "panel-danger", title : "panel-title1", content : "Panel content", type : "appCore.content.panel", typeContent:"B" };
+				
+				var item2 = {
+						classEx : "panel-danger",
+						title : "panel-title",
+						content : "Panel content",
+						type : "appCore.screen.appType",
+						typeContent:"S",
+						data:[item1,item1,item1,item1,item1,item1,item1,item1,item1],
+						layout:"appCore.content.layout.l1"
+				};
+				var s4=appCore.getContent(item2);
+				$( "#"+this.id ).append(s4);  
+			
+				
+			},
+			buildCSS:function(){alert("buildCSS");},
+			buildEvent:function(){alert("buildEvent");},
+			data:{},
+			load:function(){alert("load");this.buildHTML();this.buildCSS();this.buildEvent();}
+		};
+	app.buildHTML();
+
 
 });
 									

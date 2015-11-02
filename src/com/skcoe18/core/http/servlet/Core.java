@@ -196,14 +196,30 @@ public class Core extends HttpServlet {
 
 	private void loadfileV2(JSONObject input,HttpServletResponse response) throws JSONException, IOException{
 		// reads input file from an absolute path
-		String filePath = getPathFile(input.getString("id"));
+		String id=input.getString("id");
+		String filePath = getPathFile(id);
 
 		//File downloadFile = new File(filePath);
 		//FileInputStream inStream = new FileInputStream(downloadFile);
 
-	StringBuffer sb= new StringBuffer();
-	sb.append("var app={id:'',buildHTML:function(){$('#'+this.id).empty()},buildCSS:function(){alert('buildCSS')},buildEvent:function(){alert('buildEvent')},data:{},load:function(){alert('load'),this.buildHTML(),this.buildCSS(),this.buildEvent()}};");
-		
+		StringBuffer sb= new StringBuffer();
+		sb.append("var app={");
+		//Set ID
+		sb.append( "id:'"+id+"'");
+		sb.append( ",buildHTML:function(){");
+		//Set BuildHTML
+		sb.append( "$('#'sb.append(this.id).empty()");
+		sb.append( "},buildCSS:function(){");
+		//Set buildCSS
+		sb.append( "alert('buildCSS')");
+		sb.append( "},buildEvent:function(){");
+		//Set buildEvent
+		sb.append( "alert('buildEvent')");
+		sb.append( "},data:{");
+		sb.append( "},load:function(){");
+		sb.append( "alert('load'),this.buildHTML(),this.buildCSS(),this.buildEvent()");
+		sb.append( "}};");
+
 		// modifies response
 		response.setContentType("application/javascript");
 		response.setContentLength((int) sb.length());
@@ -222,7 +238,7 @@ public class Core extends HttpServlet {
 		while ((bytesRead = inStream.read(buffer)) != -1) {
 			outStream.write(buffer, 0, bytesRead);
 		}*/
-		
+
 		outStream.write(sb.toString().getBytes());
 
 		//inStream.close();
