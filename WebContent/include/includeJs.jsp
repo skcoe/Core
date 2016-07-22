@@ -15,6 +15,7 @@ String display=(String)session.getAttribute("display"); */
 
 
 <script type="text/javascript"> 
+var app={};
 var appCore={};
 appCore.path='<%= basePath %>';
 appCore.pathService=appCore.path +'/Coe';
@@ -22,20 +23,24 @@ appCore.type={};
 appCore.key={appType:"type"};
 appCore.content={};
 appCore.screen={};
+appCore.current={};
+appCore.current.view={};
 appCore.content.layout = {};
+
 appCore.screen.appType=function(item){
-	console.log("appCore.screen.appType");
-	var item = {
+	console.log("appCore.screen.appType : "+ item.id);
+	appCore.current.view.appType=item.id;
+	/* var item = {
 			title : "title Screen",
 			id:"containerAppType",
 			content : "Panel content",
 			type : "appCore.screen.menu.appType",
-			typeContent:"S",/*Screen  */
+			typeContent:"S",
 			data:[item1,item1,item1,item1,item1,item1,item1,item1,item1],
 			layout:"appCore.content.layout.l1"
-	};
+	}; */
 	var screen,title,body,page;
-	title="<div class='jumbotron'> <div class='container'> <h1>"+item.title+"</h1> </div></div>";
+	title="<div class='jumbotron' > <div class='container'> <h1>"+item.title+"</h1> </div></div>";
 	
 	layout=appCore.getType(item.layout);
 	
@@ -55,93 +60,84 @@ appCore.screen.appType=function(item){
 	return screen.html();
 };
 
-appCore.content.panel=function(item){
-	//var item={classEx:"panel-danger",title:"panel-title",content:"Panel content"};
-	var itemHtml="<div class='panel "+item.classEx+"'> <div class='panel-heading'> <h3 class='panel-title'>"+item.title+"</h3> </div> <div class='panel-body'>"+item.content+"</div> </div>";
-	return itemHtml;
+appCore.content.panel = function(item) {
+		//var item={classEx:"panel-danger",title:"panel-title",content:"Panel content"};
+		var itemHtml = "<div class='panel "+item.classEx+"'> <div class='panel-heading'> <h3 class='panel-title'><span row='"+item.id+"' class='glyphicon glyphicon-link' aria-hidden='true'></span>&larr;"
+				+ item.title
+				+ "</h3> </div> <div class='panel-body'>"
+				+ item.content + "</div> </div>";
+		return itemHtml;
 };
-
-	var item1 = { classEx : "panel-danger", title : "panel-title", content : "Panel content", type : "appCore.content.panel", typeContent:"B" /*Basic  */ };
-	var item2 = {
-			classEx : "panel-danger",
-			title : "panel-title",
-			content : "Panel content",
-			type : "appCore.content.panel",
-			typeContent:"S",/*Screen  */
-			data:[item1,item1,item1,item1,item1,item1,item1,item1,item1],
-			layout:"appCore.content.layout.l1",
-			screen:"appCore.content.screen.menu.appType"
-	};
 
 	
 appCore.content.layout.l1 = function(data) {
-	var row = $("<div class='row'></div>");
-	var col1 = $("<div class='col-md-4'></div>");
-	var col2 = $("<div class='col-md-4'></div>");
-	var col3 = $("<div class='col-md-4'></div>");
+		var row = $("<div class='row'></div>");
+		var col1 = $("<div class='col-md-4'></div>");
+		var col2 = $("<div class='col-md-4'></div>");
+		var col3 = $("<div class='col-md-4'></div>");
 		console.log("appCore.content.layout.l1 ");
 		console.log("data.length = " + data.length);
 		//data=[];
 		for (var i = 0; i < data.length; i++) {
-			var te=data[i];
-			if( (i+1) % 3 == 0){
+			var te = data[i];
+			if ((i + 1) % 3 == 0) {
 				col3.append(appCore.getContent(te));
-			}else if( (i+1) % 2 == 0){
+			} else if ((i + 1) % 2 == 0) {
 				col2.append(appCore.getContent(te));
-			}else{
+			} else {
 				col1.append(appCore.getContent(te));
 			}
 		}
-		var num =data.length % 3;
+		var num = data.length % 3;
 		console.log("num = " + num);
 		row.append(col1);
 		row.append(col2);
 		row.append(col3);
-		
+
 		return row;
-	};
-	appCore.getType = function(str) {
+};
+appCore.getType = function(str) {
 		var obj;
 		var temp = str.split(".");
 		if (temp.length == 3) {
 			obj = appCore[temp[1]][temp[2]];
-		}else if(temp.length == 4){
+		} else if (temp.length == 4) {
 			obj = appCore[temp[1]][temp[2]][temp[3]];
 		}
 		return obj;
-	};
-	
-	appCore.getContent = function(item) {
+};
+
+appCore.getContent = function(item) {
 		//var s2=[];
 		var html;
-		console.log("[TYPE][appCore.getContent]");
-		
+	
+
 		if (item == undefined || item == null) {
 			var msg = "[TYPE][appCore.getContent][ERROR][NULL]";
 			console.log(msg);
 			return msg;
 		}
-		
-		var typeContent =item.typeContent;
-		if (typeContent == null || typeContent == undefined || typeContent=="") {
+
+		var typeContent = item.typeContent;
+		if (typeContent == null || typeContent == undefined
+				|| typeContent == "") {
 			var msg = "[TYPE][appCore.getContent][ERROR][typeContent is NULL]";
 			console.log(msg);
 			return msg;
 		}
-		
-		var type =item.type;
-		if (type == null || type == undefined || type =="") {
+
+		var type = item.type;
+		if (type == null || type == undefined || type == "") {
 			var msg = "[TYPE][appCore.getContent][ERROR][type is NULL]";
 			console.log(msg);
 			return msg;
 		}
-		
+
 		/* if("S" == typeContent){
 			console.log(typeContent);
 		} */
-		
-		
-		 if (item instanceof Array) {
+
+		if (item instanceof Array) {
 			console.log("[TYPE][appCore.getContent][Array][" + JSON.stringify(item) + "]");
 		} else if (item instanceof Object) {
 			console.log("[TYPE][appCore.getContent][Object][" + JSON.stringify(item) + "]");
@@ -149,10 +145,39 @@ appCore.content.layout.l1 = function(data) {
 			html = objContent(item);
 		} else {
 			console.log("[TYPE][appCore.getContent][ERROR][unkonw type]");
-		} 
-
+		}
+		console.log("[TYPE][appCore.getContent]["+type+"]["+typeContent+"]");
 		return html;
-	};
+};
+appCore.load = function(item) {
+	
+	$.ajax({
+		url:appCore.path+"/Core",
+		data:{c:"{'service':'LOAD_FILE_APP','id':'"+item.id+"'}"},
+		dataType:"script",
+		success:function(){
+			//alert("test");
+			//alert(appCore.key.appType);
+			//app.id=ida;
+			//console.log(appCore[appCore.key.appType][item.id]);
+			appCore[appCore.key.appType][item.id]=app;
+			appCore[appCore.key.appType][item.id].load();
+			app={};
+		},
+		complete:function(){
+			//alert("complete");
+		},
+		error:function( jqXHR,  textStatus,  errorThrown){
+			alert("error:function> "+textStatus+jqXHR.responseText);
+			//console.log(jqXHR.statusText);
+			//console.log(jqXHR.responseText);
+			//console.log(jqXHR.status);
+			//console.log(errorThrown);
+			//console.log("Error:"+textStatus); 
+		}
+	}); 
+};
+
 </script>
 
 

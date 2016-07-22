@@ -17,6 +17,8 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.skcoe18.core.http.servlet.util.FileUtil;
+
 
 
 
@@ -80,6 +82,7 @@ public class Core extends HttpServlet {
 				//service="LOAD_FILE";
 				
 				service=input.getString("service");
+				log.info("service: "+service);
 				if("LOAD_APP".equals(service)){
 					ServletContext sc = getServletContext();
 					ApplicationContext app_ctx = ApplicationContext.getContext(sc);
@@ -150,7 +153,7 @@ public class Core extends HttpServlet {
 	private void loadfileV1(JSONObject input,HttpServletResponse response) throws JSONException, IOException{
 		// reads input file from an absolute path
 		String filePath = getPathFile(input.getString("id"));
-
+		
 		File downloadFile = new File(filePath);
 		FileInputStream inStream = new FileInputStream(downloadFile);
 
@@ -196,8 +199,10 @@ public class Core extends HttpServlet {
 
 	private void loadfileV2(JSONObject input,HttpServletResponse response) throws JSONException, IOException{
 		// reads input file from an absolute path
+		log.info("loadfileV2");
 		String id=input.getString("id");
-		String filePath = getPathFile(id);
+		//FileUtil.getfile(FileUtil.getfileName(id));
+		//String filePath = getPathFile(id);
 
 		//File downloadFile = new File(filePath);
 		//FileInputStream inStream = new FileInputStream(downloadFile);
@@ -208,17 +213,33 @@ public class Core extends HttpServlet {
 		sb.append( "id:'"+id+"'");
 		sb.append( ",buildHTML:function(){");
 		//Set BuildHTML
-		sb.append( "$('#'sb.append(this.id).empty()");
+		//sb.append( "$('#'+this.id).empty();console.log(JSON.stringify(this.data));var s4=appCore.getContent(this.data);$('#'+this.id).append(s4);");
+		sb.append(FileUtil.getfile(FileUtil.getfileName(id,"buildHTML")));
 		sb.append( "},buildCSS:function(){");
 		//Set buildCSS
-		sb.append( "alert('buildCSS')");
+		//sb.append( "alert('buildCSS');");
+		sb.append(FileUtil.getfile(FileUtil.getfileName(id,"buildCSS")));
 		sb.append( "},buildEvent:function(){");
+		
 		//Set buildEvent
-		sb.append( "alert('buildEvent')");
-		sb.append( "},data:{");
-		sb.append( "},load:function(){");
-		sb.append( "alert('load'),this.buildHTML(),this.buildCSS(),this.buildEvent()");
+		//sb.append( "alert('buildEvent'); $('span' ).on( 'click' , function() { console.log(this);  console.log($(this).attr('row')); });");
+		sb.append(FileUtil.getfile(FileUtil.getfileName(id,"buildEvent")));
+		sb.append( "},data:");
+		
+		//set Data
+		//sb.append("{'classEx':'panel-danger','title':'panel-title','content':'Panel content','type':'appCore.screen.appType','typeContent':'S',id:'containerAppType','data':[{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'appDiagram'},{'classEx':'panel-danger','title':'panel-title3','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title3','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title(app)','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'},{'classEx':'panel-danger','title':'panel-title3','content':'Panel content','type':'appCore.content.panel','typeContent':'B','id':'B'}],'layout':'appCore.content.layout.l1'}");
+		String str=FileUtil.getfile(FileUtil.getfileName(id,"buildData"));
+		if(str==null || "".equals(str)){
+			sb.append("{}");
+		}else{
+			sb.append(str);
+		}
+		
+		sb.append( ",load:function(){");
+		sb.append( "this.buildHTML();this.buildCSS();this.buildEvent();");
 		sb.append( "}};");
+		
+		//sb.append("var app={id:'containerAppType',buildHTML:function(){$('#'+this.id).empty();console.log(JSON.stringify(this.data));var i=appCore.getContent(this.data);$('#'+this.id).append(i)},buildCSS:function(){},buildEvent:function(){},data:item2,load:function(){alert('test');this.buildHTML();this.buildCSS();this.buildEvent();}};");
 
 		// modifies response
 		response.setContentType("application/javascript");
@@ -244,6 +265,8 @@ public class Core extends HttpServlet {
 		//inStream.close();
 		outStream.close(); 
 	}
+	
+	
 
 
 }
