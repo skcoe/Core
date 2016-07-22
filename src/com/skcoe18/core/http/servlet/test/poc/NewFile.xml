@@ -1,0 +1,67 @@
+<Request>
+	<instance command="RequestService" requestcategory="Order Request"
+		requestdt="" source="" webrequestnumber="4980472927">
+		<CustomerAccount building="" category="RES" firstname="CCBSFLP66"
+			floor="" house="66" id="6938394495240" idtype="ID" khet="ห้วยขวาง"
+			khwang="ห้วยขวาง" lastname="UPTOYOU" moo="" priority="N" province="กรุงเทพมหานคร"
+			room="" soi="" street="รัชดา" subcategory="RES" title="นาย" zipcode="10310" />
+		<ListOfProcessParameters A1DP="" A1DropWire=""
+			ACAB="" ARCU="" EquiptmentCable_flag="" IVRWfmFlag="" amNode=""
+			branch_num="00000" changeaddrflag="N" changenumflag="N" ciaid="6988546710"
+			cllicode="" cllicode2="" comment="" contactemail="rabell.uptoyou@gmail.com"
+			createdby="WI" endUser="" endindicator="" espgid="" freetrialdate=""
+			ibsDepotKey="" locationcode="" logicalfirstname="" logicallastname=""
+			logicaltitle="" pincode="" plantcode="" projectcode=""
+			projectfirstname="" projectlastname="" projecttitle="" referencecode=""
+			relatedOrderId="" requestedservicenumber="" salemobile="0830495626"
+			share="" sr_number="" subServiceNotifyFlag="" tapNumber=""
+			tax_id="6938394495240" transaction_id="160041887" tvs_service_type=""
+			vcarecode="" workforce_reference="" workteam="" />
+		<Listofproducts>
+			<Product appbanintdate="10/15/2015 00:00:00" appointmentdate="10/17/2015 00:00:00"
+				appointmentperiod="AM" assetnum="021001539" billcycle=""
+				billingaccountid="" consolidateproductid="" customeraccountid=""
+				defaultcustomerflag="S" defaultserviceflag="S" disconnectdate=""
+				disconnecttype="" dummy="N" marketingcode="NNN"
+				notappointmentdateflag="N" orderclosedate="" prodstartdate=""
+				promotion="" refcircuit="" relatedassetnum="" requestdt="10/15/2015 00:00:00"
+				requesttype="New" salechannel="WI" saleid="01023555"
+				serviceaccountid="" servicesubtype="WEB" servicetype="IPFIXTU"
+				servicetypeid="1-196VJHN">
+				<ListofSales>
+					<Sale id="01023555" />
+				</ListofSales>
+				<BillingAccount building="ESPLANADE" firstname="CCBSFLP66"
+					floor="" house="66" khet="ห้วยขวาง" khwang="ห้วยขวาง" lastname="UPTOYOU"
+					moo="" province="กรุงเทพมหานคร" room="" soi="" street="รัชดา"
+					title="นาย" zipcode="10310">
+					<MailingAddress building="ESPLANADE" floor="" house="66"
+						khet="ห้วยขวาง" khwang="ห้วยขวาง" moo="" province="กรุงเทพมหานคร"
+						room="" soi="" street="รัชดา" zipcode="10310" />
+				</BillingAccount>
+				<ServiceAccount building="ESPLANADE" firstname="CCBSFLP66"
+					floor="" house="66" khet="ห้วยขวาง" khwang="ห้วยขวาง" lastname="UPTOYOU"
+					moo="" province="กรุงเทพมหานคร" room="" soi="" street="รัชดา"
+					title="นาย" zipcode="10310" />
+				<Contact building="ESPLANADE" cellphnum="0830495626"
+					firstname="CCBSFLP66" floor="" house="66" khet="ห้วยขวาง" khwang="ห้วยขวาง"
+					lastname="UPTOYOU" moo="" province="กรุงเทพมหานคร" room="" soi=""
+					street="รัชดา" title="นาย" workphnum="026997335" zipcode="10310" />
+				<ListofElements>
+					<element action="Add" effenddate="" effstartdate=""
+						overidefixrate="" overideonetimerate="" product="1-14AIX1C"
+						quantity="1" rateoverideexp="" rateoveridetp=""
+						skipchkdupparamflg="Y" skipflg="Y" />
+					<element action="Add" effenddate="" effstartdate=""
+						overidefixrate="" overideonetimerate="" product="1-1459ZEX"
+						quantity="1" rateoverideexp="" rateoveridetp=""
+						skipchkdupparamflg="Y" skipflg="Y" />
+					<element action="Add" effenddate="" effstartdate=""
+						overidefixrate="" overideonetimerate="" product="1-17YL5D"
+						quantity="1" rateoverideexp="" rateoveridetp=""
+						skipchkdupparamflg="Y" skipflg="Y" />
+				</ListofElements>
+			</Product>
+		</Listofproducts>
+	</instance>
+</Request>
